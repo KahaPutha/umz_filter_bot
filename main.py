@@ -14,6 +14,8 @@ from templates.messages import HELP_MESSAGE, STATS_TEMPLATE, USER_INFO_TEMPLATE
 from utils.database import get_user_count, insert_user
 from utils.helpers import format_size, log_activity
 from utils.shortener import shorten_url
+from utils.database import get_user_count, insert_user
+
 
 # Basic Command Handlers
 async def start(update: Update, context):

@@ -41,6 +41,16 @@ def add_file(file_data):
         logger.error(f"Error adding file: {e}")
         return None
 
+def insert_user(user_data):
+    """Insert a new user into the 'users' collection."""
+    try:
+        result = users_collection.insert_one(user_data)
+        logger.info(f"Inserted user with ID {result.inserted_id}")
+        return result.inserted_id  # Return the ID of the newly inserted user
+    except Exception as e:
+        logger.error(f"Error inserting user: {e}")
+        return None
+
 # Function to get user count from the 'users' collection
 def get_user_count():
     """Get the total number of users."""
