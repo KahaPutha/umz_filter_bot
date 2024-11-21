@@ -1,0 +1,34 @@
+# Ignore Python bytecode files
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore virtual environment folder
+venv/
+
+# Ignore Dockerfile and .dockerignore (in case you don’t want them in the image)
+Dockerfile
+.dockerignore
+
+# Ignore the .env file (it contains sensitive information like tokens and keys)
+.env
+
+# Ignore git directory and files (if you're using git for version control)
+.git
+.gitignore
+
+# Ignore test or debug logs
+*.log
+
+# Ignore any IDE-specific files (VSCode, PyCharm, etc.)
+.vscode/
+.idea/
+
+# Ignore temporary files or caches
+*.bak
+*.swp
+*.tmp
+
+# Ignore any other directories or files that shouldn't be included in the Docker image
+*.md
