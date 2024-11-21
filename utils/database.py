@@ -8,11 +8,12 @@ import logging
 client = pymongo.MongoClient(DATABASE_URL)
 db = client[DATABASE_NAME]  # Specify the database name (defined in .env)
 
-# Assuming you have collections like 'files', 'users', 'messages', and 'filters'
+# Collections
 files_collection = db.get_collection("files")
 users_collection = db.get_collection("users")
 messages_collection = db.get_collection("messages")
 filters_collection = db.get_collection("filters")
+chats_collection = db.get_collection("chats")  # Collection for storing chat data
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -129,6 +130,17 @@ def delete_file(file_id):
         logger.error(f"Error deleting file: {e}")
         return 0
 
+# Function to get all chats from the 'chats' collection
+def get_all_chats():
+    """Fetch all chats from the 'chats' collection."""
+    try:
+        chats = chats_collection.find()
+        logger.info(f"Fetched {len(chats)} chats.")
+        return list(chats)  # Return all chats as a list
+    except Exception as e:
+        logger.error(f"Error fetching chats: {e}")
+        return []
+
 # Optionally, you can add a function to check the connection to MongoDB
 def check_connection():
     """Check if the connection to MongoDB is successful."""
@@ -146,6 +158,7 @@ def create_indexes():
         # Create indexes on frequently queried fields
         files_collection.create_index([("file_name", DESCENDING)])
         users_collection.create_index([("user_id", DESCENDING)])
+        chats_collection.create_index([("chat_id", DESCENDING)])  # Add index for chats collection
         logger.info("Indexes created successfully.")
     except Exception as e:
         logger.error(f"Error creating indexes: {e}")

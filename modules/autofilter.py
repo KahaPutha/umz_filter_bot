@@ -3,8 +3,6 @@ from telegram import Update, InputMediaPhoto, InlineKeyboardMarkup, InlineKeyboa
 from telegram.ext import ContextTypes, CommandHandler, MessageHandler, filters
 from config import USE_CAPTION_FILTER, CUSTOM_FILE_CAPTION
 from utils.database import search_files, add_file, get_file_by_id, update_file, delete_file, files_collection
-from utils.helpers import generate_caption
-
 
 # Function to handle auto-filtering of messages
 async def auto_filter(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -25,7 +23,7 @@ async def auto_filter(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     filename=file.get("filename"),
                     filesize=file.get("filesize"),
                     duration=file.get("duration")
-                ) if CUSTOM_FILE_CAPTION else generate_caption(file)
+                ) if CUSTOM_FILE_CAPTION else generate_caption(file)  # Use the locally defined function
 
                 # Send the file to the user
                 await update.message.reply_document(
@@ -52,7 +50,7 @@ async def send_file(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 filename=file.get("filename"),
                 filesize=file.get("filesize"),
                 duration=file.get("duration")
-            ) if CUSTOM_FILE_CAPTION else generate_caption(file)
+            ) if CUSTOM_FILE_CAPTION else generate_caption(file)  # Use the locally defined function
 
             # Send the file to the user
             await update.callback_query.message.reply_document(
@@ -143,7 +141,7 @@ async def check_for_filter(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 filename=file.get("filename"),
                 filesize=file.get("filesize"),
                 duration=file.get("duration")
-            ) if CUSTOM_FILE_CAPTION else generate_caption(file)
+            ) if CUSTOM_FILE_CAPTION else generate_caption(file)  # Use the locally defined function
 
             await update.message.reply_text(
                 f"Filter found: {file.get('filename')}\n{file_caption}",

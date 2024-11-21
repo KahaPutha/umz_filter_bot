@@ -5,21 +5,26 @@ import logging
 # Load environment variables from .env file
 load_dotenv()
 
+# Ensure the 'logs' directory exists before logging
+log_dir = os.path.join(os.getcwd(), "logs")
+if not os.path.exists(log_dir):
+    os.makedirs(log_dir)  # Create the 'logs' directory if it doesn't exist
+
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,  # Set the log level (INFO for normal logging)
     format="%(asctime)s - %(levelname)s - %(message)s",
     handlers=[
         logging.StreamHandler(),
-        logging.FileHandler(os.path.join("logs", "config.log"))  # Log config-related info
+        logging.FileHandler(os.path.join(log_dir, "config.log"))  # Log config-related info
     ]
 )
 
 # Helper function to handle boolean environment variables safely
 def get_bool_env(var_name, default=False):
     """Helper function to safely get boolean environment variables."""
-    value = os.getenv(var_name, str(default))
-    return value.lower() in ("true", "1", "t", "y", "yes")
+    value = os.getenv(var_name, str(default)).lower()
+    return value in ("true", "1", "t", "y", "yes")
 
 # Check if required environment variables are available
 required_vars = ["BOT_TOKEN", "API_ID", "API_HASH", "DATABASE_URL"]
@@ -82,5 +87,3 @@ if not API_HASH:
     log_missing_var("API_HASH")
 if not DATABASE_URL:
     log_missing_var("DATABASE_URL")
-
-# Optionally, you can add a test to verify database connectivity or other critical setups
